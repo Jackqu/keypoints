@@ -16,8 +16,7 @@ class Prediction:
         
         self.use_cuda = use_cuda
         
-        self.offset_x_ij = torch.arange(0, self.img_small_width) \
-            .repeat(self.img_small_height).view(1,1,self.img_small_height, self.img_small_width)
+        self.offset_x_ij = torch.arange(0, self.img_small_width).repeat(self.img_small_height).view(1,1,self.img_small_height, self.img_small_width)
         self.offset_y_ij = torch.arange(0, self.img_small_height) \
             .repeat(self.img_small_width).view(self.img_small_width, self.img_small_height).t().contiguous() \
             .view(1,1,self.img_small_height, self.img_small_width)

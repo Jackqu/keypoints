@@ -26,8 +26,7 @@ class KeypointsDataset(Dataset):
         self.map_value = np.array([[np.linalg.norm([self.img_width - _x, self.img_height - _y]) 
                           for _x in range(img_width * 2)] for _y in range(img_height * 2)])
         
-        self.offsets_x_value = np.array([[self.img_width - _x for _x in range(self.img_width * 2)] 
-                                         for _y in range(self.img_height * 2)])
+        self.offsets_x_value = np.array([[self.img_width - _x for _x in range(self.img_width * 2)] for _y in range(self.img_height * 2)])
         self.offsets_y_value = np.array([[self.img_height - _y for _x in range(self.img_width * 2)] 
                                          for _y in range(self.img_height * 2)])
         
@@ -63,8 +62,7 @@ class KeypointsDataset(Dataset):
                 continue
             if self.img_height - y < 0 or self.img_width - x < 0:
                 continue          
-            maps[_i] = self.map_value[self.img_height - y : self.img_height * 2 - y, 
-                                      self.img_width  - x : self.img_width * 2  - x]       
+            maps[_i] = self.map_value[self.img_height - y : self.img_height * 2 - y, self.img_width  - x : self.img_width * 2  - x]
             maps[_i][maps[_i] <= self.radius] = 1
             maps[_i][maps[_i] >  self.radius] = 0
             offsets_x[_i] = self.offsets_x_value[self.img_height - y : self.img_height * 2 - y, 
@@ -75,3 +73,21 @@ class KeypointsDataset(Dataset):
     
     def __len__(self):
         return len(self.labels)
+
+
+if __name__ =='__main__':
+    print('For understanding datast')
+
+    """
+    calculation of map_value
+    map_value is like a template, set x and y as the point has zero value ,and copy the corresponding values
+    """
+    img_width, img_height = 4, 4
+    map_value = np.array([[np.linalg.norm([img_width - _x, img_height - _y]) for _x in range(img_width * 2)] for _y in range(img_height * 2)])
+    #print('map_value shape is: ', map_value.shape)
+    #print(map_value)
+
+    """
+    calculation of offsets
+    similiar with map_value, offsets are not normalized, with same scale as img
+    """
